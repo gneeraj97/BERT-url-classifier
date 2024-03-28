@@ -88,7 +88,7 @@ def evaluate(model, data_loader, device):
     return accuracy_score(actual_labels, predictions), classification_report(actual_labels, predictions)
 
 
-def predict_sentiment(text, model, tokenizer, device, max_length=128):
+def predict(text, model, tokenizer, device, max_length=128):
     model.eval()
     encoding = tokenizer(text, return_tensors='pt', max_length=max_length, padding='max_length', truncation=True)
     input_ids = encoding['input_ids'].to(device)
@@ -100,6 +100,7 @@ def predict_sentiment(text, model, tokenizer, device, max_length=128):
     return "Malicious" if preds.item() == 1 else "Benign"
 
 
+# we can define different parameters here. We can capture more information by increasing the max_length, and num_epochs. 
 bert_model_name = 'bert-base-uncased'
 num_classes = 2
 max_length = 256
